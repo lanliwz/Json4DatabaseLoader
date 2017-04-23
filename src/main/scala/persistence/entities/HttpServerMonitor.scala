@@ -2,6 +2,7 @@ package persistence.entities
 
 //import slick.driver.MySQLDriver.api._
 import slick.driver.H2Driver.api._
+import org.slf4j.{LoggerFactory,Logger}
 
 case class HttpServerMonitor(    
                               agentId:Long,
@@ -47,7 +48,35 @@ case class HttpServerMonitorEntity(
                               numRedirects: Long
 ) extends  BaseEntity
 object Convertor {
+  def logger = LoggerFactory.getLogger("Convertor")
   def apply(data:HttpServerMonitor):HttpServerMonitorEntity = {
+    if(data==null) {
+      logger.info("Empty HttpServerMonitor")
+          HttpServerMonitorEntity(
+                              0,
+                              0, 
+                              0, 
+                              "",
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              "",
+                              "",
+                              0,
+                              "",
+                              "",
+                              "",
+                              0,
+                              0,
+                              0,
+                              0)
+  
+    }
+
+    else {  
     HttpServerMonitorEntity(
                               0,
                               data.agentId, 
@@ -69,6 +98,7 @@ object Convertor {
                               data.receiveTime,
                               data.fetchTime,
                               data.numRedirects)
+  }
   }
 
 }

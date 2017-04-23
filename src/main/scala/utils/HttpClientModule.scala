@@ -10,7 +10,10 @@ trait HttpClientModule {
   val url: String
   val username: String
   val password: String
-  val proxy: String 
+  val proxyHost: String 
+  val proxyPort: Int
+  val proxyUsername: String
+  val proxyPassword: String
 }
 
 trait HttpClientModuleImpl extends HttpClientModule {
@@ -18,5 +21,8 @@ trait HttpClientModuleImpl extends HttpClientModule {
   override val url = config.getString("http.client.url")
   override val username = config.getString("http.client.username")
   override val password = config.getString("http.client.password")
-  override val proxy = config.getString("http.client.proxy")
+  override val proxyHost = config.getString("http.client.proxyHost")
+  override val proxyPort = config.getInt("http.client.proxyPort")
+  override val proxyUsername = config.getString("http.client.proxyUsername")
+  override val proxyPassword = config.getString("http.client.proxyPassword")
 }

@@ -4,7 +4,10 @@ import persistence.entities._
 import spray.json.DefaultJsonProtocol
 import spray.json._
 
+import org.slf4j.{LoggerFactory,Logger}
+
 object JsonProtocol4HttpServerResponse extends DefaultJsonProtocol {
+  def logger = LoggerFactory.getLogger(JsonProtocol4HttpServerResponse.getClass)
   implicit object HttpServerJsonFormat extends JsonFormat[HttpServerMonitor] {
     def write(c:HttpServerMonitor) = JsArray (
                       JsNumber(c.agentId),
@@ -85,7 +88,11 @@ object JsonProtocol4HttpServerResponse extends DefaultJsonProtocol {
                       receiveTime.toInt,
                       fetchTime.toInt,
                       numRedirects.toInt)
-      case _ => deserializationError("HttpServer expected")
+      case _ => {
+        logger.info("No HttpServer Item")
+        null
+//        deserializationError("HttpServer expected")
+      }
     
       
     }

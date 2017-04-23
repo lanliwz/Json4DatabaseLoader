@@ -1,0 +1,1 @@
+java -cp slick-akka-http-assembly-0.0.1.jar Main

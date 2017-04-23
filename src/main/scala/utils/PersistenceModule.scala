@@ -18,7 +18,7 @@ trait DbModule extends Profile{
 }
 
 trait PersistenceModule {
-	val suppliersDal: BaseDal[SuppliersTable,Supplier]
+
 	val httpServerDal: BaseDal[HttpServerMonitorTable,HttpServerMonitorEntity]
 	val httpServerKeyDal: BaseDal[HttpServerKeyTable,HttpServerKeys]
 }
@@ -36,7 +36,35 @@ trait PersistenceModuleImpl extends PersistenceModule with DbModule{
 	override implicit val profile: JdbcProfile = dbConfig.driver
 	override implicit val db: JdbcProfile#Backend#Database = dbConfig.db
 
-	override val suppliersDal = new BaseDalImpl[SuppliersTable,Supplier](TableQuery[SuppliersTable]) {}
+	override val httpServerDal = new BaseDalImpl[HttpServerMonitorTable,HttpServerMonitorEntity](TableQuery[HttpServerMonitorTable]) {}
+	override val httpServerKeyDal = new BaseDalImpl[HttpServerKeyTable,HttpServerKeys](TableQuery[HttpServerKeyTable]) {}
+	
+	val self = this
+
+}
+
+trait PersistenceMysqlModuleImpl extends PersistenceModule with DbModule{
+	this: Configuration  =>
+
+	private val dbConfig : DatabaseConfig[JdbcProfile]  = DatabaseConfig.forConfig("mysqldb")
+
+	override implicit val profile: JdbcProfile = dbConfig.driver
+	override implicit val db: JdbcProfile#Backend#Database = dbConfig.db
+
+	override val httpServerDal = new BaseDalImpl[HttpServerMonitorTable,HttpServerMonitorEntity](TableQuery[HttpServerMonitorTable]) {}
+	override val httpServerKeyDal = new BaseDalImpl[HttpServerKeyTable,HttpServerKeys](TableQuery[HttpServerKeyTable]) {}
+	
+	val self = this
+
+}
+
+trait PersistenceOraModuleImpl extends PersistenceModule with DbModule{
+	this: Configuration  =>
+	private val dbConfig : DatabaseConfig[JdbcProfile]  = DatabaseConfig.forConfig("oracledb")
+
+	override implicit val profile: JdbcProfile = dbConfig.driver
+	override implicit val db: JdbcProfile#Backend#Database = dbConfig.db
+
 	override val httpServerDal = new BaseDalImpl[HttpServerMonitorTable,HttpServerMonitorEntity](TableQuery[HttpServerMonitorTable]) {}
 	override val httpServerKeyDal = new BaseDalImpl[HttpServerKeyTable,HttpServerKeys](TableQuery[HttpServerKeyTable]) {}
 	

@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <target>System.out</target>
-        <encoder>
-            <pattern>%date{MM/dd HH:mm:ss} %-5level[%.15thread] %logger{1} - %msg%n</pattern>
-        </encoder>
-    </appender>
-    <logger name="slick.backend.DatabaseComponent.action" level="debug"/>
-    <logger name="slick.jdbc" level="debug" />
-    <logger name="slick.ast" level="debug" />
-    <logger name="slick.memory" level="error" />
-    <logger name="slick.relational" level="error" />
-    <logger name="slick.compiler" level="error" />
-    <logger name="persistence.entities" level="debug" />
-    <logger name="utils" level="debug" />
-    <root level="debug">
-        <appender-ref ref="CONSOLE"/>
-    </root>
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${log.dir}/j2d.log</file>
+		<append>true</append>
+		<encoder>
+			<pattern>%date{MM/dd HH:mm:ss} %-5level[%.15thread] %logger{1} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<layout>
+			<pattern>%date{MM/dd HH:mm:ss} %-5level[%.15thread] %logger{1} - %msg%n</pattern>
+		</layout>
+	</appender>
+	<logger name="slick" level="debug">
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="utils" level="debug" >
+		<appender-ref ref="FILE" />
+	</logger>
+	<root level="DEBUG">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</root>
 
 </configuration>

@@ -1,7 +1,6 @@
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.stream.ActorMaterializer
-import rest.SupplierRoutes
 import utils.{PersistenceModuleImpl, ActorModuleImpl, ConfigurationModuleImpl}
 import utils.HttpClientModuleImpl
 import scala.concurrent.{Await,Future}

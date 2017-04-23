@@ -30,20 +30,24 @@ libraryDependencies ++= {
     "com.oracle" % "ojdbc6" % "11.2.0.4.0",
     "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0",
     "ch.qos.logback" % "logback-classic" % "1.1.3",
-    "org.slf4j" % "slf4j-nop" % "1.6.4"
+    "org.slf4j" % "slf4j-api" % "1.6.4",
+    "commons-io" % "commons-io" % "2.4",
+    "commons-httpclient" % "commons-httpclient" % "3.1",
+    "org.apache.httpcomponents" % "httpclient" % "4.5.3"
   )
 
 }
 
 test in assembly := {}
 
-mainClass in assembly := Some("StarterMain")
+mainClass in assembly := Some("Main")
 
 assemblyMergeStrategy in assembly <<= (assemblyMergeStrategy in assembly) {
 	(old) => {
 		case PathList("META-INF", xs @ _*) => MergeStrategy.discard
 		case "application.conf" => MergeStrategy.concat
 		case "reference.conf"   => MergeStrategy.concat
+		case "logback.xml"   => MergeStrategy.last
 		case x => MergeStrategy.last
 	}
 }
