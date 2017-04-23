@@ -13,13 +13,13 @@
 			<pattern>%date{MM/dd HH:mm:ss} %-5level[%.15thread] %logger{1} - %msg%n</pattern>
 		</layout>
 	</appender>
-	<logger name="slick" level="debug">
+	<logger name="slick" level="DEBUG">
 		<appender-ref ref="FILE" />
 	</logger>
-	<logger name="utils" level="debug" >
+	<logger name="utils" level="DEBUG" >
 		<appender-ref ref="FILE" />
 	</logger>
-	<root level="DEBUG">
+	<root level="INFO">
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="FILE" />
 	</root>

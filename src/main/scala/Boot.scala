@@ -37,14 +37,14 @@ import org.slf4j.{LoggerFactory,Logger}
 object Main extends App {
   // configuring modules for application, cake pattern for DI
   val logger = LoggerFactory.getLogger("Main")
-  val modules = new ConfigurationModuleImpl with ActorModuleImpl with PersistenceMysqlModuleImpl with HttpClientModuleImpl
+  val modules = new ConfigurationModuleImpl with ActorModuleImpl with PersistenceOraModuleImpl with HttpClientModuleImpl
   implicit val system = modules.system
   implicit val materializer = ActorMaterializer()
   implicit val ec = modules.system.dispatcher
   val url: String = modules.url
   val username = modules.username
   val password = modules.password
-  val hasProxy = false
+  val hasProxy = modules.hasProxy
   val proxyHost = modules.proxyHost
   val proxyPort = modules.proxyPort
   val proxyUsername = modules.proxyUsername
@@ -123,14 +123,15 @@ object Main extends App {
       val pxyCredentials = new UsernamePasswordCredentials("lali", "Llwz1962#")
       val pxyAuthScope = new AuthScope("bcpxy.nycnet", 8080);
       client.getState().setProxyCredentials(pxyAuthScope, pxyCredentials)
-      
-    }
-
-  
+        
 //    config.setProxy(proxyHost, proxyPort)
 //    val pxyCredentials = new UsernamePasswordCredentials(proxyUsername, proxyPassword)
 //    val pxyAuthScope = new AuthScope(proxyHost, proxyPort,AuthScope.ANY_REALM)
 //    client.getState().setProxyCredentials(pxyAuthScope, pxyCredentials)
+
+      
+    }
+
 
     val authScope = new AuthScope("api.thousandeyes.com", 443, AuthScope.ANY_REALM)
     val credentials = new UsernamePasswordCredentials(username, password);

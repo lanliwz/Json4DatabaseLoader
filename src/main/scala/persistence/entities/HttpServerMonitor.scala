@@ -1,7 +1,8 @@
 package persistence.entities
 
 //import slick.driver.MySQLDriver.api._
-import slick.driver.H2Driver.api._
+//import slick.driver.H2Driver.api._
+import com.typesafe.slick.driver.oracle.OracleDriver.api._
 import org.slf4j.{LoggerFactory,Logger}
 
 case class HttpServerMonitor(    

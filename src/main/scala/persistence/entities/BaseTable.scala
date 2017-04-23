@@ -1,6 +1,7 @@
 package persistence.entities
 
-import slick.driver.H2Driver.api._
+//import slick.driver.H2Driver.api._
+import com.typesafe.slick.driver.oracle.OracleDriver.api._
 import slick.lifted.Tag
 
 abstract class BaseTable[T](tag: Tag, name: String) extends Table[T](tag, name) {

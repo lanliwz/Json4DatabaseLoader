@@ -8,6 +8,8 @@ import utils.{DbModule, Profile}
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
+import org.slf4j.{LoggerFactory,Logger}
+
 trait BaseDal[T,A] {
   def insert(row : A): Future[Long]
   def insert(rows : Seq[A]): Future[Seq[Long]]
@@ -23,14 +25,17 @@ trait BaseDal[T,A] {
 }
 
 class BaseDalImpl[T <: BaseTable[A], A <: BaseEntity](tableQ: TableQuery[T])(implicit val db: JdbcProfile#Backend#Database,implicit val profile: JdbcProfile) extends BaseDal[T,A] with Profile with DbModule {
-
+  def logger = LoggerFactory.getLogger("BaseDalImpl")
+  
   import profile.api._
 
   override def insert(row: A): Future[Long] = {
+    logger.info("Database Insert Single Row")
     insert(Seq(row)).map(_.head)
   }
 
   override def insert(rows: Seq[A]): Future[Seq[Long]] = {
+    logger.info("Database Batch Insert")
     db.run(tableQ returning tableQ.map(_.id) ++= rows.filter(_.isValid))
   }
 
